@@ -29,5 +29,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-dev --optimize-autoloader --ignore-platform-req=ext-pdo_pgsql --ignore-platform-req=ext-pgsql
 
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+CMD php artisan migrate --force && apache2-foreground
 
 EXPOSE 80
