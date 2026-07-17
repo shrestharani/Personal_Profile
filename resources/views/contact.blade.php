@@ -111,20 +111,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </div>
                     <div class="col-lg-7 mb-4">
                         <div class="form-wrapper">
-                            <form action="#" method="post">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="list-unstyled">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            @if (session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <form action="{{ route('contact.submit') }}" method="POST">
+                                @csrf
                                 <div class="d-flex flex-column">
                                     <label>Your Name:</label>
-                                    <input class="text-input" type="text" name="text1" id="text1" required>
+                                    <input class="text-input" type="text" name="name" id="name" required value="{{ old('name') }}">
                                 </div>
                                 <div class="d-flex flex-column my-sm-5 my-3">
                                     <label>Your Email Address:</label>
-                                    <input class="text-input" type="email" name="email" id="email" required>
+                                    <input class="text-input" type="email" name="email" id="email" required value="{{ old('email') }}">
                                 </div>
                                 <div class="d-flex flex-column my-sm-5 my-3">
                                     <div class="message">
                                         <h2>Add Your Message</h2>
                                     </div>
-                                    <textarea name="t1" id="t1" required></textarea>
+                                    <textarea name="message" id="message" required>{{ old('message') }}</textarea>
                                 </div>
                                 <input class="submit" type="submit" value="Send">
                             </form>
