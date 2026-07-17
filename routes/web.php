@@ -13,3 +13,7 @@ Route::get('/contact', function () { return view('contact'); });
 
 // Is route ko humne controller ke 'store' function aur blade ke 'contact.submit' name se match kar diya
 Route::post('/contact-submit', [ContactController::class, 'store'])->name('contact.submit');
+Route::get('/run-migration', function () {
+    \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+    return "Migration Done Successfully!";
+});
